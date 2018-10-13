@@ -52,8 +52,22 @@ export default class App extends React.Component {
         renderItem={({item}) => 
         <View style={styles.post}>
           <Text style={styles.title}>{item.data.title}</Text>
-          {item.data.is_video ? 
-          <Video source={{uri: item.data.media.reddit_video.fallback_url}}
+          {
+            item.data.is_video? 
+          <Video source={{uri: item.data.media.reddit_video.fallback_url || item.data.preview.reddit_video_preview.fallback_url}}
+            paused={true}
+            controls={true}
+            onBuffer={this.onBuffer}
+            ref={(ref) => {
+              this.player = ref
+            }}  
+            style={{
+              width: window.width,
+              height: item.data.preview ? (window.width * (item.data.preview.images[0].source.height / item.data.preview.images[0].source.width)) : 0
+            }}
+          />:
+          item.data.preview && item.data.preview.reddit_video_preview && item.data.preview.reddit_video_preview.is_gif?
+          <Video source={{uri: item.data.preview.reddit_video_preview.fallback_url}}
             paused={true}
             controls={true}
             onBuffer={this.onBuffer}
