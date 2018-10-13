@@ -49,10 +49,15 @@ export default class App extends React.Component {
         <View style={styles.post}>
           {
           <Image
+            resizeMode='contain'
             source={{
               uri: item.data.url
             }}
-            style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width}}
+            style={{
+              backgroundColor: "black",
+              width: window.width,
+              height: item.data.preview ? (window.width * (item.data.preview.images[0].source.height / item.data.preview.images[0].source.width)) : 0
+            }}
           />
           }
           <Text style={styles.title}>{item.data.title}</Text>
@@ -63,6 +68,7 @@ export default class App extends React.Component {
   }
 }
 
+const window = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -82,8 +88,6 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingTop: 40
-  },
-  title: {
   },
   post: {
     marginBottom: 20
