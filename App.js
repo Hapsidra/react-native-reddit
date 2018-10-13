@@ -49,11 +49,24 @@ export default class App extends React.Component {
     return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        style={styles.list}
         data={this.state.dataSource}
         renderItem={({item}) => 
         <View style={styles.post}>
-          <Text style={styles.time}>{Math.round((date.getTime() - new Date(item.data.created_utc * 1000).getTime()) / 1000 / 60 / 60)} hours ago</Text>
+          <View style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-between"
+          }}>
+            <View style={{
+              flex: 1,
+              flexDirection: "column",
+              justifyContent: "space-around"
+            }}>
+              <Text style={styles.name}>{item.data.subreddit_name_prefixed}</Text>
+              <Text style={styles.name}>u/{item.data.author}</Text>
+            </View>
+            <Text style={styles.time}>{Math.round((date.getTime() - new Date(item.data.created_utc * 1000).getTime()) / 1000 / 60 / 60)} hours ago</Text>
+          </View>
           <Text style={styles.title}>{item.data.title}</Text>
           {
             item.data.is_video? 
@@ -100,6 +113,15 @@ export default class App extends React.Component {
           </Text>
           : null
           }
+          <View style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-around",
+              margin: 2
+            }}>
+              <Text style={styles.button}>Score {item.data.score}</Text>
+              <Text style={styles.button}>Comments {item.data.num_comments}</Text>
+            </View>
         </View>
         }
       />
@@ -116,15 +138,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#D3D3D3',
   },
   title: {
-    fontSize: 20,
+    fontFamily: "Avenir Next",
+    fontSize: 18,
     color: "black"
   },
   time: {
+    fontFamily: "Avenir Next",
     color: "#A9A9A9",
-    fontSize: 12,
-    textAlign:"right"
+    fontSize: 13,
   },
-  list: {
+  name: {
+    fontFamily: "Avenir Next",
+    color: "#696969",
+    fontSize: 14,
+  },
+  button: {
+    fontFamily: "Avenir Next",
   },
   post: {
     backgroundColor: "white",
