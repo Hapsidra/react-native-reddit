@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import {Platform, StyleSheet, Text, View, FlatList, ActivityIndicator, Image, Dimensions, SafeAreaView} from 'react-native';
+import {Platform, StyleSheet, Text, View, FlatList, ActivityIndicator, Image, Dimensions, SafeAreaView, Linking} from 'react-native';
 import Video from 'react-native-video';
 
 export default class App extends React.Component {
@@ -79,6 +79,7 @@ export default class App extends React.Component {
               height: item.data.preview ? (window.width * (item.data.preview.images[0].source.height / item.data.preview.images[0].source.width)) : 0
             }}
           />:
+          item.data.url.endsWith(".jpg") ?
           <Image
             resizeMode='contain'
             source={{
@@ -88,7 +89,13 @@ export default class App extends React.Component {
               width: window.width,
               height: item.data.preview ? (window.width * (item.data.preview.images[0].source.height / item.data.preview.images[0].source.width)) : 0
             }}
-          />
+          />:
+          item.data.url?
+          <Text style={{color: 'blue'}}
+            onPress={() => Linking.openURL(item.data.url)}>
+            {item.data.url}
+          </Text>
+          : null
           }
         </View>
         }
