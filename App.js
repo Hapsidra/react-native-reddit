@@ -73,11 +73,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#D3D3D3',
   },
   list: {
   },
   post: {
-    marginBottom: 20
+    backgroundColor: "white",
+    marginBottom: 10
   }
 });
