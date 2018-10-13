@@ -8,6 +8,7 @@
 
 import React from 'react';
 import {Platform, StyleSheet, Text, View, FlatList, ActivityIndicator, Image, Dimensions, SafeAreaView} from 'react-native';
+import Video from 'react-native-video';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -31,6 +32,9 @@ export default class App extends React.Component {
       console.log(responseJson);
     })
   }
+  onBuffer() {
+    console.log("onBuffer");
+  }
   render() {
     if (this.state.isLoading) {
       return(
@@ -48,17 +52,30 @@ export default class App extends React.Component {
         renderItem={({item}) => 
         <View style={styles.post}>
           <Text style={styles.title}>{item.data.title}</Text>
+          {item.data.is_video ? 
+          <Video source={{uri: item.data.media.reddit_video.fallback_url}}
+            paused={true}
+            controls={true}
+            onBuffer={this.onBuffer}
+            ref={(ref) => {
+              this.player = ref
+            }}  
+            style={{
+              width: window.width,
+              height: item.data.preview ? (window.width * (item.data.preview.images[0].source.height / item.data.preview.images[0].source.width)) : 0
+            }}
+          />:
           <Image
             resizeMode='contain'
             source={{
               uri: item.data.url
             }}
             style={{
-              backgroundColor: "black",
               width: window.width,
               height: item.data.preview ? (window.width * (item.data.preview.images[0].source.height / item.data.preview.images[0].source.width)) : 0
             }}
           />
+          }
         </View>
         }
       />
