@@ -10,6 +10,7 @@ import React from 'react';
 import {Platform, StyleSheet, Text, View, FlatList, ActivityIndicator, Image, Dimensions, SafeAreaView, Linking} from 'react-native';
 import Video from 'react-native-video';
 
+const date = new Date();
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -35,6 +36,7 @@ export default class App extends React.Component {
   onBuffer() {
     console.log("onBuffer");
   }
+  
   render() {
     if (this.state.isLoading) {
       return(
@@ -51,6 +53,7 @@ export default class App extends React.Component {
         data={this.state.dataSource}
         renderItem={({item}) => 
         <View style={styles.post}>
+          <Text style={styles.time}>{Math.round((date.getTime() - new Date(item.data.created_utc * 1000).getTime()) / 1000 / 60 / 60)} hours ago</Text>
           <Text style={styles.title}>{item.data.title}</Text>
           {
             item.data.is_video? 
@@ -104,7 +107,6 @@ export default class App extends React.Component {
     )
   }
 }
-
 const window = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
@@ -112,6 +114,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#D3D3D3',
+  },
+  title: {
+    fontSize: 20,
+    color: "black"
+  },
+  time: {
+    color: "#A9A9A9",
+    fontSize: 12,
+    textAlign:"right"
   },
   list: {
   },
