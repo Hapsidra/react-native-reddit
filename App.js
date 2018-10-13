@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import {Platform, StyleSheet, Text, View, FlatList, ActivityIndicator, Image, Dimensions} from 'react-native';
+import {Platform, StyleSheet, Text, View, FlatList, ActivityIndicator, Image, Dimensions, SafeAreaView} from 'react-native';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -34,20 +34,20 @@ export default class App extends React.Component {
   render() {
     if (this.state.isLoading) {
       return(
-        <View style={{flex: 1, padding: 20, justifyContent: 'center'}}>
+        <SafeAreaView style={styles.container}>
           <ActivityIndicator/>
-        </View>
+        </SafeAreaView>
       )
     }
-    console.log('got');
     console.log(this.state.dataSource);
-    return (<View style={styles.container}>
+    return (
+    <SafeAreaView style={styles.container}>
       <FlatList
         style={styles.list}
         data={this.state.dataSource}
         renderItem={({item}) => 
         <View style={styles.post}>
-          {
+          <Text style={styles.title}>{item.data.title}</Text>
           <Image
             resizeMode='contain'
             source={{
@@ -59,12 +59,11 @@ export default class App extends React.Component {
               height: item.data.preview ? (window.width * (item.data.preview.images[0].source.height / item.data.preview.images[0].source.width)) : 0
             }}
           />
-          }
-          <Text style={styles.title}>{item.data.title}</Text>
         </View>
         }
       />
-    </View>)
+    </SafeAreaView>
+    )
   }
 }
 
@@ -76,18 +75,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
   list: {
-    paddingTop: 40
   },
   post: {
     marginBottom: 20
