@@ -1,37 +1,7 @@
 import React from 'react'
-import { Platform, StyleSheet, Text, View, Image, Dimensions, SafeAreaView, Linking } from 'react-native'
-import Video from 'react-native-video';
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#D3D3D3',
-    },
-    title: {
-        fontFamily: "Avenir Next",
-        fontSize: 18,
-        color: "black"
-    },
-    time: {
-        fontFamily: "Avenir Next",
-        color: "#A9A9A9",
-        fontSize: 13,
-    },
-    name: {
-        fontFamily: "Avenir Next",
-        color: "#696969",
-        fontSize: 14,
-    },
-    button: {
-        fontFamily: "Avenir Next",
-    },
-    post: {
-        backgroundColor: "white",
-        marginBottom: 10
-    }
-});
+import { Platform, StyleSheet, Text, View, Image, Dimensions, SafeAreaView, Linking, Button } from 'react-native'
+import Video from 'react-native-video'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 const date = new Date();
 const window = Dimensions.get('window');
@@ -105,9 +75,47 @@ const Post = (item) =>
             justifyContent: "space-around",
             margin: 2
         }}>
-            <Text style={styles.button}>Score {item.data.score}</Text>
-            <Text style={styles.button}>Comments {item.data.num_comments}</Text>
+            <Icon.Button name="heart" >{item.data.score.toString()}</Icon.Button>
+            <Icon.Button name="comments" >{item.data.num_comments.toString()}</Icon.Button>
+            
         </View>
     </View>
+
+/*
+<Button
+                title={ item.data.score.toString()}
+                color="#841584"
+            />
+            <Button
+                title={item.data.num_comments.toString()}
+                color="#841584"
+            />
+            */
+
+const styles = StyleSheet.create({
+    title: {
+        fontFamily: "Avenir Next",
+        fontSize: 18,
+        color: "black"
+    },
+    time: {
+        fontFamily: "Avenir Next",
+        color: "#A9A9A9",
+        fontSize: 13,
+    },
+    name: {
+        fontFamily: "Avenir Next",
+        color: "#696969",
+        fontSize: 14,
+    },
+    button: {
+        fontFamily: "Avenir Next",
+    },
+    post: {
+        backgroundColor: "white",
+        marginBottom: 10
+    }
+});
+
 
 export default Post
